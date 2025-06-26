@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gem_store/features/auth/login_screen/ui/login_screen.dart';
+import 'package:gem_store/app_constrains/app_routes.dart';
+import 'package:gem_store/features/auth/email_verification_screen/ui/email_verification_screen.dart';
 import 'package:gem_store/features/auth/signup_screen/bloc/sign_up_bloc.dart';
 import 'package:gem_store/features/auth/widgets/auth_header_widgets.dart';
+import 'package:gem_store/features/auth/widgets/custom_snackbar.dart';
 import 'package:gem_store/features/auth/widgets/login_signup_widget.dart';
 import 'package:gem_store/theme/app_colors.dart';
 import 'package:get/get.dart';
@@ -86,7 +88,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ? state.isPasswordVisible
                           : false;
                       final isConfirmPasswordVisible =
-                      state is SignUpVisibilityState
+                          state is SignUpVisibilityState
                           ? state.isConfirmPasswordVisible
                           : false;
 
@@ -168,15 +170,22 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 32.h),
                   BlocConsumer<SignUpBloc, SignUpState>(
                     listener: (context, state) {
-                      if(state is SignUpSuccess){
-                        Get.snackbar("Success", "SignUp Successfull");
-                      }else if(state is SignUpFailure){
-                        Get.snackbar("Failed", state.error);
+                      if (state is SignUpSuccess) {
+                        showCustomSnackbar(
+                          context,
+                          "Success",
+                          "Check you email to verify your account",
+                        );
+                        Get.offNamed(AppRoutes.loginScreen);
+                      } else if (state is SignUpFailure) {
+                        showCustomSnackbar(context, "Failed", state.error);
                       }
                     },
                     builder: (context, state) {
-                      if(state is SignUpLoading){
-                        return Center(child: CircularProgressIndicator(color: Colors.green,),);
+                      if (state is SignUpLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(color: Colors.green),
+                        );
                       }
                       return SizedBox(
                         width: double.infinity.w,
@@ -202,10 +211,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     text: "Already have account?",
                     button: "Log in",
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
+                      Get.offNamed(AppRoutes.loginScreen);
                     },
                   ),
                 ],

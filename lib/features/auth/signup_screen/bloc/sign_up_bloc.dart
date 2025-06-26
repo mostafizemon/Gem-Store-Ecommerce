@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gem_store/features/auth/repositories/auth_reposityory.dart';
 import 'package:meta/meta.dart';
 
 part 'sign_up_event.dart';
@@ -57,13 +58,25 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(SignUpLoading());
 
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final user = await AuthRepository().signUp(
         email: event.email,
         password: event.password,
+        name: event.name,
       );
-      emit(SignUpSuccess());
+
+      if (user != null) {
+        emit(SignUpSuccess());
+      } else {
+        emit(SignUpFailure("Something went wrong."));
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        emit(SignUpFailure("This email is already registered."));
+      } else {
+        emit(SignUpFailure("Error: ${e.message ?? "Unknown error"}"));
+      }
     } catch (e) {
-      emit(SignUpFailure("Error: ${e.toString()}"));
+      emit(SignUpFailure("Unexpected error occurred."));
     }
   }
 }

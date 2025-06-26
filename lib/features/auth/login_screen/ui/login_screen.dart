@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gem_store/app_constrains/app_routes.dart';
 import 'package:gem_store/features/auth/login_screen/bloc/login_bloc.dart';
 import 'package:gem_store/features/auth/signup_screen/ui/signup_screen.dart';
 import 'package:gem_store/features/auth/widgets/auth_header_widgets.dart';
+import 'package:gem_store/features/auth/widgets/custom_snackbar.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme/app_colors.dart';
@@ -115,16 +117,40 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   SizedBox(height: 32.h),
-                  SizedBox(
-                    width: double.infinity.w,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          //TODO:
-                        }
-                      },
-                      child: Text("LOG IN"),
-                    ),
+                  BlocConsumer<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      if (state is LoginLoading) {
+                        Center(child: CircularProgressIndicator());
+                      } else if (state is LoginFailed) {
+                        showCustomSnackbar(
+                          context,
+                          "Login Failed",
+                          state.error,
+                        );
+                        print(state.error);
+                      } else if (state is LoginSuccess) {
+                        showCustomSnackbar(context, "Success", "Login Success");
+                        Get.offNamed(AppRoutes.homeScreen);
+                      }
+                    },
+                    builder: (context, state) {
+                      return SizedBox(
+                        width: double.infinity.w,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<LoginBloc>().add(
+                                SubmitLoginButtonEvent(
+                                  emailController.text.trim(),
+                                  passwordController.text,
+                                ),
+                              );
+                            }
+                          },
+                          child: Text("LOG IN"),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 32.h),
                   LoginSignupWidget(

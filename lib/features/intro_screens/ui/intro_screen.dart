@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gem_store/app_constrains/app_routes.dart';
 import 'package:gem_store/common/widgets/intro_screen_button.dart';
-import 'package:gem_store/features/auth/signup_screen/ui/signup_screen.dart';
 import 'package:gem_store/features/intro_screens/cubit/intro_screen_cubit.dart';
 import 'package:gem_store/features/intro_screens/data/intro_data.dart';
 import 'package:gem_store/features/intro_screens/widgets/intro_screen_content_widget.dart';
 import 'package:gem_store/theme/app_colors.dart';
+import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -73,9 +74,12 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
 
                 SizedBox(height: 32.h),
-                IntroScreenButton(buttonText: "Shopping now", onTap: () {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SignupScreen()), (route)=>false);
-                }),
+                IntroScreenButton(
+                  buttonText: "Shopping now",
+                  onTap: () {
+                    Get.offNamed(AppRoutes.loginScreen);
+                  },
+                ),
                 SizedBox(height: 32.h),
               ],
             ),
