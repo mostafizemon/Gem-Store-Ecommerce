@@ -45,7 +45,7 @@ class IntroScreenContentWidget extends StatelessWidget {
                 fit: BoxFit.cover,
                 // Adjust height as needed
                 height: 368.h,
-                width: 261.h,
+                width: 261.w,
               ),
             ),
           ),
