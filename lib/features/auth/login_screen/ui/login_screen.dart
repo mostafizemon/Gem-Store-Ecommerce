@@ -119,21 +119,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 32.h),
                   BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
-                      if (state is LoginLoading) {
-                        Center(child: CircularProgressIndicator());
-                      } else if (state is LoginFailed) {
+                      if (state is LoginFailed) {
                         showCustomSnackbar(
                           context,
                           "Login Failed",
                           state.error,
                         );
-                        print(state.error);
                       } else if (state is LoginSuccess) {
                         showCustomSnackbar(context, "Success", "Login Success");
                         Get.offNamed(AppRoutes.homeScreen);
                       }
                     },
                     builder: (context, state) {
+                      if (state is LoginLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      }
                       return SizedBox(
                         width: double.infinity.w,
                         child: ElevatedButton(

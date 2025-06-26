@@ -42,21 +42,11 @@ class AuthRepository {
   }
 
   Future<User?> login({required String email, required String password}) async {
-    final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+    final credential = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-
-    final user = userCredential.user;
-
-    if (user != null && !user.emailVerified) {
-      await user.sendEmailVerification();
-      await _firebaseAuth.signOut();
-      throw FirebaseAuthException(
-        code: 'email-not-verified',
-        message: 'Email not verified. A new verification email has been sent.',
-      );
-    }
+    final user = credential.user;
     return user;
   }
 

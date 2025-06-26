@@ -1,4 +1,4 @@
-import 'package:gem_store/utils/image_util.dart';
+import 'package:gem_store/app_constrains/app_images.dart';
 
 class IntroData {
   final String image;

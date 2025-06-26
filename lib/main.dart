@@ -14,18 +14,19 @@ import 'package:gem_store/features/intro_screens/ui/intro_screen.dart';
 import 'package:gem_store/features/intro_screens/ui/welcome_screen.dart';
 import 'package:gem_store/features/splash_screen/cubit/splash_cubit.dart';
 import 'package:gem_store/features/splash_screen/ui/splash_screen.dart';
+import 'package:gem_store/services/local_storage_service.dart';
 import 'package:gem_store/theme/app_theme.dart';
 import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await LocalStorageService().init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => IntroScreenCubit()),
         BlocProvider(create: (context) => SignUpBloc()),
         BlocProvider(create: (context) => LoginBloc()),
-        BlocProvider(create: (context)=>SplashCubit()),
+        BlocProvider(create: (context) => SplashCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -51,13 +52,10 @@ class MyApp extends StatelessWidget {
                 name: AppRoutes.welcomeScreen,
                 page: () => WelcomeScreen(),
               ),
-              GetPage(
-                name: AppRoutes.introScreen,
-                page: () => IntroScreen(),
-              ),
+              GetPage(name: AppRoutes.introScreen, page: () => IntroScreen()),
               GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
               GetPage(name: AppRoutes.signupScreen, page: () => SignupScreen()),
-              GetPage(name: AppRoutes.homeScreen, page:()=> HomeScreen()),
+              GetPage(name: AppRoutes.homeScreen, page: () => HomeScreen()),
             ],
             debugShowCheckedModeBanner: false,
             title: 'Gem Store',
