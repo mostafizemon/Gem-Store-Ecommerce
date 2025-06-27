@@ -11,6 +11,7 @@ import 'package:gem_store/features/auth/signup_screen/ui/signup_screen.dart';
 import 'package:gem_store/features/bottom_nav_screen/cubit/bottom_nav_cubit.dart';
 import 'package:gem_store/features/bottom_nav_screen/ui/bottom_nav_screen.dart';
 import 'package:gem_store/features/cart_screen/ui/cart_screen.dart';
+import 'package:gem_store/features/home_screen/bloc/home_bloc.dart';
 import 'package:gem_store/features/home_screen/ui/home_screen.dart';
 import 'package:gem_store/features/intro_screens/cubit/intro_screen_cubit.dart';
 import 'package:gem_store/features/intro_screens/ui/intro_screen.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(create: (context) => SplashCubit()),
         BlocProvider(create: (context)=>BottomNavCubit()),
+        BlocProvider(create: (context)=>HomeBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
