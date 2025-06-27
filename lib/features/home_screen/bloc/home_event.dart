@@ -13,3 +13,12 @@ class SelectCategoryEvent extends HomeEvent {
   @override
   List<Object?> get props => [selectedId];
 }
+
+class LoadBannerEvent extends HomeEvent {}
+
+class ChangeBannerPageEvent extends HomeEvent {
+  final int pageIndex;
+  const ChangeBannerPageEvent(this.pageIndex);
+  @override
+  List<Object?> get props => [pageIndex];
+}

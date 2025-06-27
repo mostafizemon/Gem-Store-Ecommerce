@@ -7,11 +7,33 @@ sealed class HomeState extends Equatable {
   List<Object?> get props => [];
 }
 
-final class HomeInitial extends HomeState {}
+class HomeLoaded extends HomeState {
+  final List<BannerModel> banners;
+  final int currentIndex;
+  final int selectedCategoryID;
+  final bool isBannerLoading;
 
-class CategorySelected extends HomeState {
-  final int selectedID;
-  const CategorySelected(this.selectedID);
+  const HomeLoaded({
+    required this.banners,
+    this.currentIndex = 0,
+    this.selectedCategoryID = 0,
+    this.isBannerLoading = false,
+  });
+
+  HomeLoaded copyWith({
+    List<BannerModel>? banners,
+    int? currentIndex,
+    int? selectedCategoryID,
+    bool? isBannerLoading,
+  }) {
+    return HomeLoaded(
+      banners: banners ?? this.banners,
+      currentIndex: currentIndex ?? this.currentIndex,
+      selectedCategoryID: selectedCategoryID ?? this.selectedCategoryID,
+      isBannerLoading: isBannerLoading ?? this.isBannerLoading,
+    );
+  }
+
   @override
-  List<Object?> get props => [selectedID];
+  List<Object?> get props => [banners, currentIndex, selectedCategoryID];
 }
