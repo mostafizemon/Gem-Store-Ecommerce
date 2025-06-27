@@ -19,7 +19,7 @@ class BackButtonWidget extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: AppColors.greyColor.withOpacity(0.3),
+              color: AppColors.greyColor.withValues(alpha: 0.3),
               blurRadius: 2,
               spreadRadius: 1,
               offset: Offset(-1, 1),

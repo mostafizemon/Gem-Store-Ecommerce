@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gem_store/app_constrains/app_routes.dart';
-import 'package:gem_store/features/auth/email_verification_screen/ui/email_verification_screen.dart';
 import 'package:gem_store/features/auth/signup_screen/bloc/sign_up_bloc.dart';
 import 'package:gem_store/features/auth/widgets/auth_header_widgets.dart';
 import 'package:gem_store/features/auth/widgets/custom_snackbar.dart';

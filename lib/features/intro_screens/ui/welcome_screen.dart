@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gem_store/app_constrains/app_routes.dart';
 import 'package:gem_store/common/widgets/intro_screen_button.dart';
-import 'package:gem_store/features/intro_screens/ui/intro_screen.dart';
 import 'package:gem_store/app_constrains/app_images.dart';
 import 'package:get/get.dart';
 
