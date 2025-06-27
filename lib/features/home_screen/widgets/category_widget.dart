@@ -132,7 +132,7 @@ class CategoryWidget extends StatelessWidget {
                           radius: 22.sp,
                           backgroundColor: isSelected
                               ? AppColors.blackColor
-                              : AppColors.greyColor.withOpacity(0.2),
+                              : AppColors.greyColor.withValues(alpha: 0.2),
                           child: Icon(
                             category.icon,
                             size: 32.sp,
