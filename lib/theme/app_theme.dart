@@ -30,6 +30,12 @@ class AppTheme {
           padding: WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 12.h)),
         ),
       ),
+
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.whiteColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      )
     );
   }
 }

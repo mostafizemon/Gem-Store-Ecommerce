@@ -8,10 +8,14 @@ import 'package:gem_store/features/auth/login_screen/bloc/login_bloc.dart';
 import 'package:gem_store/features/auth/login_screen/ui/login_screen.dart';
 import 'package:gem_store/features/auth/signup_screen/bloc/sign_up_bloc.dart';
 import 'package:gem_store/features/auth/signup_screen/ui/signup_screen.dart';
+import 'package:gem_store/features/bottom_nav_screen/cubit/bottom_nav_cubit.dart';
+import 'package:gem_store/features/bottom_nav_screen/ui/bottom_nav_screen.dart';
+import 'package:gem_store/features/cart_screen/ui/cart_screen.dart';
 import 'package:gem_store/features/home_screen/ui/home_screen.dart';
 import 'package:gem_store/features/intro_screens/cubit/intro_screen_cubit.dart';
 import 'package:gem_store/features/intro_screens/ui/intro_screen.dart';
 import 'package:gem_store/features/intro_screens/ui/welcome_screen.dart';
+import 'package:gem_store/features/profile_screen/ui/profile_screen.dart';
 import 'package:gem_store/features/splash_screen/cubit/splash_cubit.dart';
 import 'package:gem_store/features/splash_screen/ui/splash_screen.dart';
 import 'package:gem_store/services/local_storage_service.dart';
@@ -26,12 +30,15 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   await Firebase.initializeApp();
-  runApp( MyApp());
+  runApp(MyApp());
 }
+
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -40,12 +47,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => SignUpBloc()),
         BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(create: (context) => SplashCubit()),
+        BlocProvider(create: (context)=>BottomNavCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (context, child) {
           return GetMaterialApp(
-            initialRoute: AppRoutes.splashScreen,
+            initialRoute: AppRoutes.bottomNavScreen,
             getPages: [
               GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
               GetPage(
@@ -56,6 +64,15 @@ class MyApp extends StatelessWidget {
               GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
               GetPage(name: AppRoutes.signupScreen, page: () => SignupScreen()),
               GetPage(name: AppRoutes.homeScreen, page: () => HomeScreen()),
+              GetPage(
+                name: AppRoutes.bottomNavScreen,
+                page: () => BottomNavScreen(),
+              ),
+              GetPage(name: AppRoutes.cartScreen, page: () => CartScreen()),
+              GetPage(
+                name: AppRoutes.profileScreen,
+                page: () => ProfileScreen(),
+              ),
             ],
             debugShowCheckedModeBanner: false,
             title: 'Gem Store',
