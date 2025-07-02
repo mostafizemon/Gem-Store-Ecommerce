@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       } else if (state is LoginSuccess) {
                         showCustomSnackbar(context, "Success", "Login Success");
-                        Get.offNamed(AppRoutes.homeScreen);
+                        Get.offNamed(AppRoutes.bottomNavScreen);
                       }
                     },
                     builder: (context, state) {

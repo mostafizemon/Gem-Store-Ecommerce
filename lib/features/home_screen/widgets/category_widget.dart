@@ -100,8 +100,6 @@ class CategoryWidget extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         int selectedIndex = 0;
-
-        // Use HomeLoaded state
         if (state is HomeLoaded) {
           selectedIndex = state.selectedCategoryID;
         }
@@ -121,10 +119,16 @@ class CategoryWidget extends StatelessWidget {
                   width: itemWidth,
                   child: GestureDetector(
                     onTap: () {
-                      context.read<HomeBloc>().add(
-                        SelectCategoryEvent(int.parse(category.id)),
-                      );
+                      if (selectedIndex != index) {
+                        context.read<HomeBloc>().add(
+                          SelectCategoryEvent(int.parse(category.id)),
+                        );
+                        context.read<HomeBloc>().add(
+                          LoadProductsEvent(int.parse(category.id)),
+                        );
+                      }
                     },
+
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

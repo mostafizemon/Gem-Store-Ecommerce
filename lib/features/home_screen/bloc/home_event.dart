@@ -22,3 +22,11 @@ class ChangeBannerPageEvent extends HomeEvent {
   @override
   List<Object?> get props => [pageIndex];
 }
+
+class LoadProductsEvent extends HomeEvent {
+  final int selectedId;
+  const LoadProductsEvent(this.selectedId);
+
+  @override
+  List<Object?> get props => [selectedId];
+}

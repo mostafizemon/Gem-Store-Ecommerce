@@ -24,11 +24,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(PasswordToggleButtonState(isPasswordVisible));
   }
 
-
   FutureOr<void> onLoginSubmit(
-      SubmitLoginButtonEvent event,
-      Emitter<LoginState> emit,
-      ) async {
+    SubmitLoginButtonEvent event,
+    Emitter<LoginState> emit,
+  ) async {
     emit(LoginLoading());
     try {
       final user = await AuthRepository().login(
@@ -47,20 +46,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } on FirebaseAuthException catch (e) {
       String errorMessage;
-      if (e.code == 'invalid-credential' || e.code == 'INVALID_LOGIN_CREDENTIALS') {
+      if (e.code == 'invalid-credential' ||
+          e.code == 'INVALID_LOGIN_CREDENTIALS') {
         errorMessage = "Invalid email or password";
-      }
-      else {
+      } else {
         switch (e.code) {
-        case 'invalid-email':
-          errorMessage = "The email address is invalid";
-          break;
-        case 'user-disabled':
-          errorMessage = "This account has been disabled";
-          break;
-        default:
-          errorMessage = "Login failed. Please try again";
-      }
+          case 'invalid-email':
+            errorMessage = "The email address is invalid";
+            break;
+          case 'user-disabled':
+            errorMessage = "This account has been disabled";
+            break;
+          default:
+            errorMessage = "Login failed. Please try again";
+        }
       }
 
       emit(LoginFailed(errorMessage));

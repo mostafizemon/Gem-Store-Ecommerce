@@ -17,6 +17,7 @@ import 'package:gem_store/features/intro_screens/cubit/intro_screen_cubit.dart';
 import 'package:gem_store/features/intro_screens/ui/intro_screen.dart';
 import 'package:gem_store/features/intro_screens/ui/welcome_screen.dart';
 import 'package:gem_store/features/profile_screen/ui/profile_screen.dart';
+import 'package:gem_store/features/search_screen/ui/search_screen.dart';
 import 'package:gem_store/features/splash_screen/cubit/splash_cubit.dart';
 import 'package:gem_store/features/splash_screen/ui/splash_screen.dart';
 import 'package:gem_store/services/local_storage_service.dart';
@@ -34,10 +35,6 @@ void main() async {
   runApp(MyApp());
 }
 
-
-
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -48,18 +45,18 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => SignUpBloc()),
         BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(create: (context) => SplashCubit()),
-        BlocProvider(create: (context)=>BottomNavCubit()),
-        BlocProvider(create: (context)=>HomeBloc()),
+        BlocProvider(create: (context) => BottomNavCubit()),
+        BlocProvider(create: (context) => HomeBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (context, child) {
           return GetMaterialApp(
-            initialRoute: AppRoutes.bottomNavScreen,
+            initialRoute: AppRoutes.welcomeScreen,
             getPages: [
               GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
               GetPage(
-                name: AppRoutes.welcomeScreen,
+                name: AppRoutes.splashScreen,
                 page: () => WelcomeScreen(),
               ),
               GetPage(name: AppRoutes.introScreen, page: () => IntroScreen()),
@@ -75,6 +72,7 @@ class MyApp extends StatelessWidget {
                 name: AppRoutes.profileScreen,
                 page: () => ProfileScreen(),
               ),
+              GetPage(name: AppRoutes.searchScreen, page: () => SearchScreen()),
             ],
             debugShowCheckedModeBanner: false,
             title: 'Gem Store',

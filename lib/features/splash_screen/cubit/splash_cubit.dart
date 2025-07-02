@@ -19,7 +19,7 @@ class SplashCubit extends Cubit<SplashState> {
     final isLoggedIn=localStorage.isLoggedIn;
     emit(SplashLoaded());
     if (isLoggedIn) {
-      Get.offNamed(AppRoutes.homeScreen);
+      Get.offNamed(AppRoutes.bottomNavScreen);
     } else {
       Get.offNamed(AppRoutes.welcomeScreen);
     }

@@ -8,4 +8,5 @@ abstract class AppRoutes {
   static const bottomNavScreen = '/bottom_nav';
   static const profileScreen = '/profile';
   static const cartScreen = '/cart';
+  static const searchScreen='/search';
 }
