@@ -86,10 +86,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             .collection('products')
             .where('category', isEqualTo: selectedCategory)
             .get();
-        final products = snapshot.docs
-            .map((e) => ProductsModel.fromJson(e.data()))
-            .toList();
-        print(products.map((p) => p.name).toList());
+        final products = snapshot.docs.map((e) {
+          final data = Map<String, dynamic>.from(e.data());
+          data['documentId'] = e.id;
+          return ProductsModel.fromJson(data);
+        }).toList();
         if (state is HomeLoaded) {
           emit(
             (state as HomeLoaded).copyWith(

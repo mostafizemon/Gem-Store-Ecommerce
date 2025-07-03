@@ -30,23 +30,20 @@ class ProductsWidget extends StatelessWidget {
               ),
             );
           }
-          return GestureDetector(
-            onTap: () => Get.toNamed(AppRoutes.productDetailsScreen),
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16.w,
-                mainAxisSpacing: 4.h,
-                childAspectRatio: 0.65,
-              ),
-              itemCount: state.products.length,
-              itemBuilder: (context, index) {
-                ProductsModel product = state.products[index];
-                return ProductsGridWidgets(product: product);
-              },
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16.w,
+              mainAxisSpacing: 4.h,
+              childAspectRatio: 0.65,
             ),
+            itemCount: state.products.length,
+            itemBuilder: (context, index) {
+              ProductsModel product = state.products[index];
+              return ProductsGridWidgets(product: product);
+            },
           );
         }
         return const SizedBox.shrink();

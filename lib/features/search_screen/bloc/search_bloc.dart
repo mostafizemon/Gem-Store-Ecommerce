@@ -32,9 +32,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           .endAt(['$query\uf8ff'])
           .get();
 
-      final results = snapshot.docs
-          .map((e) => ProductsModel.fromJson(e.data()))
-          .toList();
+      final results = snapshot.docs.map((e) {
+        final data = Map<String, dynamic>.from(e.data());
+        data['documentId'] = e.id;
+        return ProductsModel.fromJson(data);
+      }).toList();
       emit(SearchLoaded(results));
       print(results.length);
     } catch (e) {

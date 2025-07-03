@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gem_store/theme/app_colors.dart';
-import 'package:get/get.dart';
-import '../../../app_constrains/app_routes.dart';
 import '../../../common/model/products_model.dart';
 import '../../../common/widgets/products_grid_widgets.dart';
 import '../bloc/search_bloc.dart';
@@ -58,23 +56,20 @@ class SearchScreen extends StatelessWidget {
                       ),
                     );
                   }
-                  return GestureDetector(
-                    onTap: () => Get.toNamed(AppRoutes.productDetailsScreen),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16.w,
-                        mainAxisSpacing: 4.h,
-                        childAspectRatio: 0.65,
-                      ),
-                      itemCount: state.results.length,
-                      itemBuilder: (context, index) {
-                        ProductsModel product = state.results[index];
-                        return ProductsGridWidgets(product: product);
-                      },
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16.w,
+                      mainAxisSpacing: 4.h,
+                      childAspectRatio: 0.65,
                     ),
+                    itemCount: state.results.length,
+                    itemBuilder: (context, index) {
+                      ProductsModel product = state.results[index];
+                      return ProductsGridWidgets(product: product);
+                    },
                   );
                 } else if (state is SearchError) {
                   return Center(child: Text(state.message));
