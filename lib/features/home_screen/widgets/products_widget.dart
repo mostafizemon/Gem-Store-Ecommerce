@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gem_store/common/widgets/products_grid_widgets.dart';
 import 'package:gem_store/features/home_screen/bloc/home_bloc.dart';
 import 'package:gem_store/common/model/products_model.dart';
-import 'package:get/get.dart';
-import '../../../app_constrains/app_routes.dart';
 import '../../../theme/app_colors.dart';
 
 class ProductsWidget extends StatelessWidget {
