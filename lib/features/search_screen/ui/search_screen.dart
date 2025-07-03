@@ -8,23 +8,11 @@ import '../../../common/model/products_model.dart';
 import '../../../common/widgets/products_grid_widgets.dart';
 import '../bloc/search_bloc.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
-  @override
   Widget build(BuildContext context) {
-    final searchController = TextEditingController();
-    @override
-    void dispose() {
-      searchController.dispose();
-      super.dispose();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -42,7 +30,6 @@ class _SearchScreenState extends State<SearchScreen> {
         child: ListView(
           children: [
             TextFormField(
-              controller: searchController,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search, color: AppColors.greyColor),
                 hintText: 'Search here',

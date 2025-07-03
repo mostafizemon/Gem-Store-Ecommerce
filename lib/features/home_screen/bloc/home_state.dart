@@ -16,7 +16,7 @@ class HomeLoaded extends HomeState {
   final List<ProductsModel> products;
 
   const HomeLoaded({
-    this.banners=const[],
+    this.banners = const [],
     this.currentIndex = 0,
     this.selectedCategoryID = 0,
     this.isBannerLoading = false,

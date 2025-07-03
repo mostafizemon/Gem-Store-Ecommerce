@@ -4,10 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gem_store/common/widgets/products_grid_widgets.dart';
 import 'package:gem_store/features/home_screen/bloc/home_bloc.dart';
 import 'package:gem_store/common/model/products_model.dart';
-import 'package:gem_store/theme/app_colors.dart';
 import 'package:get/get.dart';
-
 import '../../../app_constrains/app_routes.dart';
+import '../../../theme/app_colors.dart';
 
 class ProductsWidget extends StatelessWidget {
   const ProductsWidget({super.key});
@@ -19,8 +18,7 @@ class ProductsWidget extends StatelessWidget {
         if (state is HomeLoaded) {
           if (state.isProductsLoading) {
             return const Center(child: CircularProgressIndicator());
-          }
-          if (state.products.isEmpty) {
+          } else if (state.products.isEmpty) {
             return Center(
               child: Text(
                 "No Prodcuts Found in this Category",
@@ -51,7 +49,7 @@ class ProductsWidget extends StatelessWidget {
             ),
           );
         }
-        return const Center(child: CircularProgressIndicator());
+        return const SizedBox.shrink();
       },
     );
   }

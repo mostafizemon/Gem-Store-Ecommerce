@@ -81,6 +81,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (selectedCategory == null) return;
 
       try {
+        emit((state as HomeLoaded).copyWith(isProductsLoading: false));
         final snapshot = await FirebaseFirestore.instance
             .collection('products')
             .where('category', isEqualTo: selectedCategory)
@@ -94,7 +95,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             (state as HomeLoaded).copyWith(
               selectedCategoryID: event.selectedId,
               products: products,
-              isProductsLoading: false,
             ),
           );
         }
