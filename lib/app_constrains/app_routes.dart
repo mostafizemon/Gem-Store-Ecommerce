@@ -9,4 +9,5 @@ abstract class AppRoutes {
   static const profileScreen = '/profile';
   static const cartScreen = '/cart';
   static const searchScreen='/search';
+  static const productDetailsScreen='/product_details';
 }

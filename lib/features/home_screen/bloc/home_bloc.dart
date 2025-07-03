@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gem_store/features/home_screen/model/banner_model.dart';
-import 'package:gem_store/features/home_screen/model/products_model.dart';
+import 'package:gem_store/common/model/products_model.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';

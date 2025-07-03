@@ -24,6 +24,9 @@ import 'package:gem_store/services/local_storage_service.dart';
 import 'package:gem_store/theme/app_theme.dart';
 import 'package:get/get.dart';
 
+import 'features/product_details_screen/ui/product_details_screen.dart';
+import 'features/search_screen/bloc/search_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorageService().init();
@@ -47,6 +50,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => SplashCubit()),
         BlocProvider(create: (context) => BottomNavCubit()),
         BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => SearchBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -73,6 +77,10 @@ class MyApp extends StatelessWidget {
                 page: () => ProfileScreen(),
               ),
               GetPage(name: AppRoutes.searchScreen, page: () => SearchScreen()),
+              GetPage(
+                name: AppRoutes.productDetailsScreen,
+                page: () => ProductDetailsScreen(),
+              ),
             ],
             debugShowCheckedModeBanner: false,
             title: 'Gem Store',

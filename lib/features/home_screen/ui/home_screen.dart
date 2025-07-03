@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gem_store/app_constrains/app_routes.dart';
 import 'package:gem_store/common/widgets/appbar_widget.dart';
 import 'package:gem_store/features/home_screen/bloc/home_bloc.dart';
 import 'package:gem_store/features/home_screen/widgets/category_widget.dart';
 import 'package:gem_store/features/home_screen/widgets/home_slider.dart';
 import 'package:gem_store/features/home_screen/widgets/products_widget.dart';
-import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: 16.h),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: ProductsWidget(onTap: ()=>Get.toNamed(AppRoutes.searchScreen),),
+            child: ProductsWidget(),
           ),
         ],
       ),

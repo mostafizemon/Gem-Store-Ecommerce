@@ -1,5 +1,6 @@
 class ProductsModel {
   String? name;
+  String? name_lowercase;
   String? category;
   String? description;
   int? price;
@@ -15,10 +16,11 @@ class ProductsModel {
     this.images,
     this.review,
     this.size,
-  });
+  }) : name_lowercase = name?.toLowerCase();
 
   ProductsModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    name_lowercase = json['name_lowercase'];
     category = json['category'];
     description = json['description'];
     price = json['price'] is int ? json['price'] : int.tryParse(json['price'].toString());
@@ -29,6 +31,7 @@ class ProductsModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['name'] = name;
+    data['name_lowercase'] = name?.toLowerCase();
     data['category'] = category;
     data['description'] = description;
     data['price'] = price;
