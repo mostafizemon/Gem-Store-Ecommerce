@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gem_store/common/model/products_model.dart';
-import 'package:gem_store/features/product_details_screen/widgets/size_widget.dart';
+import 'package:gem_store/features/product_details_screen/bloc/product_details_bloc.dart';
+import 'package:gem_store/features/product_details_screen/widgets/product_details_widget.dart';
 import 'package:gem_store/theme/app_colors.dart';
 import 'package:get/get.dart';
-import '../bloc/product_details_bloc.dart';
-import '../widgets/product_review_widget.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key});
@@ -15,6 +14,20 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProductsModel product = Get.arguments;
+    return BlocProvider(
+      create: (context) =>
+          ProductDetailsBloc()..add(CheckProductInCart(product.documentId!)),
+      child: ProductDetailsView(product: product),
+    );
+  }
+}
+
+class ProductDetailsView extends StatelessWidget {
+  const ProductDetailsView({super.key, required this.product});
+  final ProductsModel product;
+
+  @override
+  Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -44,63 +57,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
 
           // Content that will scroll over the images
-          Positioned.fill(
-            child: DraggableScrollableSheet(
-              initialChildSize: 0.3,
-              minChildSize: 0.3,
-              maxChildSize: 0.9,
-              builder: (context, scrollController) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 10,
-                        spreadRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: ListView(
-                    controller: scrollController,
-                    padding: const EdgeInsets.all(20),
-                    children: [
-                      Text(
-                        product.name ?? 'No Title',
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Text(
-                        '\$${product.price?.toStringAsFixed(2) ?? '0.00'}',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
-                      ProductReviewWidget(product: product),
-                      SizedBox(height: 16.h),
-                      SizeWidget(product: product),
-                      SizedBox(height: 16.h),
-                      Text(
-                        product.description ?? 'No description available',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      SizedBox(height: 20.h),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
+          ProductDetailsWidget(product: product),
 
           // Back button
           Positioned(
@@ -119,30 +76,44 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
         builder: (context, state) {
-          final isSuccess = state is AddToCartSuccess;
+          bool isButtonDisabled = true;
+          String buttonText = "Add To Cart";
+          Color buttonColor = AppColors.introScreenBgColor;
 
+          if (state is ProductDetailsLoaded) {
+            isButtonDisabled = state.isProductInCart || state.addToCartSuccess;
+            if (isButtonDisabled) {
+              buttonText = "Added to Cart";
+              buttonColor = Colors.green;
+            }
+          }
           return GestureDetector(
-            onTap: () {
-              final state = context.read<ProductDetailsBloc>().state;
-
-              if (state is SelectedSizeIndex) {
-                context.read<ProductDetailsBloc>().add(
-                  AddToCartevent(product.documentId!, state.sizeIndex),
-                );
-              } else {
-                Get.snackbar(
-                  "Please select a size",
-                  "You must choose a size before adding to cart.",
-                  backgroundColor: Colors.red.shade100,
-                  colorText: Colors.black,
-                );
-              }
-            },
+            onTap: isButtonDisabled
+                ? null
+                : () {
+                    if (state is ProductDetailsLoaded) {
+                      if (state.selectedSizeIndex != null) {
+                        context.read<ProductDetailsBloc>().add(
+                          AddToCartevent(
+                            product.documentId!,
+                            state.selectedSizeIndex!,
+                          ),
+                        );
+                      } else {
+                        Get.snackbar(
+                          "Please select a size",
+                          "You must choose a size before adding to cart.",
+                          backgroundColor: Colors.red.shade100,
+                          colorText: Colors.black,
+                        );
+                      }
+                    }
+                  },
             child: AnimatedContainer(
-              duration: Duration(seconds: 2),
+              duration: const Duration(milliseconds: 300),
               height: 72.h,
               decoration: BoxDecoration(
-                color: isSuccess ? Colors.green : AppColors.introScreenBgColor,
+                color: buttonColor,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(16),
                 ),
@@ -153,7 +124,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   Icon(Icons.shopping_bag, color: AppColors.whiteColor),
                   SizedBox(width: 8.w),
                   Text(
-                    isSuccess ? "Added to Cart" : "Add To Cart",
+                    buttonText,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,

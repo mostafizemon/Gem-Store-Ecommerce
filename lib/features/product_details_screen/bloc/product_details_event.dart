@@ -21,3 +21,10 @@ class AddToCartevent extends ProductDetailsEvent {
   @override
   List<Object> get props => [productID, sizeIndex];
 }
+
+class CheckProductInCart extends ProductDetailsEvent {
+  final String productID;
+  const CheckProductInCart(this.productID);
+  @override
+  List<Object> get props => [productID];
+}

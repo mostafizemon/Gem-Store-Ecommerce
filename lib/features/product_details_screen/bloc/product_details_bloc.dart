@@ -14,25 +14,43 @@ class ProductDetailsBloc
   ProductDetailsBloc() : super(ProductDetailsInitial()) {
     on<SelectedSizeevent>(onSelectedSize);
     on<AddToCartevent>(onAddToCart);
+    on<CheckProductInCart>(onCheckProductInCart);
   }
 
   FutureOr<void> onSelectedSize(
     SelectedSizeevent event,
     Emitter<ProductDetailsState> emit,
   ) {
-    emit(SelectedSizeIndex(event.sizeIndex));
+    if (state is ProductDetailsLoaded) {
+      final currentState = state as ProductDetailsLoaded;
+      emit(currentState.copyWith(selectedSizeIndex: event.sizeIndex));
+    }
   }
 
   FutureOr<void> onAddToCart(
     AddToCartevent event,
     Emitter<ProductDetailsState> emit,
   ) async {
-    emit(AddToCartloading());
+    if (state is ProductDetailsLoaded) {
+      final currentState = state as ProductDetailsLoaded;
+      emit(
+        currentState.copyWith(isAddingToCart: true, clearErrorMessage: true),
+      );
+    }
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final userUid = prefs.getString('uid');
       if (userUid == null) {
-        emit(AddToCartError('User not logged in'));
+        if (state is ProductDetailsLoaded) {
+          final currentState = state as ProductDetailsLoaded;
+          emit(
+            currentState.copyWith(
+              isAddingToCart: false,
+              errorMessage: 'User not logged in',
+            ),
+          );
+        }
         return;
       }
       final cartCollection = FirebaseFirestore.instance.collection('cart');
@@ -43,9 +61,52 @@ class ProductDetailsBloc
         'quantity': 1,
         'createdAt': Timestamp.now(),
       });
-      emit(AddToCartSuccess());
+      if (state is ProductDetailsLoaded) {
+        final currentState = state as ProductDetailsLoaded;
+        emit(
+          currentState.copyWith(
+            isAddingToCart: false,
+            addToCartSuccess: true,
+            isProductInCart: true,
+          ),
+        );
+      }
     } catch (e) {
-      emit(AddToCartError(e.toString()));
+      if (state is ProductDetailsLoaded) {
+        final currentState = state as ProductDetailsLoaded;
+        emit(
+          currentState.copyWith(
+            isAddingToCart: false,
+            errorMessage: e.toString(),
+          ),
+        );
+      }
+    }
+  }
+
+  FutureOr<void> onCheckProductInCart(
+    CheckProductInCart event,
+    Emitter<ProductDetailsState> emit,
+  ) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userUid = prefs.getString('uid');
+      if (userUid == null) {
+        emit(ProductDetailsLoaded(isProductInCart: false));
+        return;
+      }
+      final cartCollection = FirebaseFirestore.instance.collection('cart');
+      final querySnapshot = await cartCollection
+          .where('userUid', isEqualTo: userUid)
+          .where('productID', isEqualTo: event.productID)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        emit(ProductDetailsLoaded(isProductInCart: true));
+      } else {
+        emit(ProductDetailsLoaded(isProductInCart: false));
+      }
+    } catch (e) {
+      emit(ProductDetailsLoaded(isProductInCart: false));
     }
   }
 }

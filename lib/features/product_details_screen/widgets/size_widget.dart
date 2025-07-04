@@ -26,8 +26,8 @@ class SizeWidget extends StatelessWidget {
             child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
               builder: (context, state) {
                 int? selectedIndex;
-                if (state is SelectedSizeIndex) {
-                  selectedIndex = state.sizeIndex;
+                if (state is ProductDetailsLoaded) {
+                  selectedIndex = state.selectedSizeIndex;
                 }
 
                 return ListView.separated(
