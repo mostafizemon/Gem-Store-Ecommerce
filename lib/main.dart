@@ -16,6 +16,7 @@ import 'package:gem_store/features/home_screen/ui/home_screen.dart';
 import 'package:gem_store/features/intro_screens/cubit/intro_screen_cubit.dart';
 import 'package:gem_store/features/intro_screens/ui/intro_screen.dart';
 import 'package:gem_store/features/intro_screens/ui/welcome_screen.dart';
+import 'package:gem_store/features/product_details_screen/bloc/product_details_bloc.dart';
 import 'package:gem_store/features/profile_screen/ui/profile_screen.dart';
 import 'package:gem_store/features/search_screen/ui/search_screen.dart';
 import 'package:gem_store/features/splash_screen/cubit/splash_cubit.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BottomNavCubit()),
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => SearchBloc()),
+        BlocProvider(create: (context) => ProductDetailsBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

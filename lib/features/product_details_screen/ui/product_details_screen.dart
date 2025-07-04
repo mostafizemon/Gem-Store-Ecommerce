@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gem_store/common/model/products_model.dart';
 import 'package:gem_store/features/product_details_screen/widgets/size_widget.dart';
+import 'package:gem_store/theme/app_colors.dart';
 import 'package:get/get.dart';
+import '../bloc/product_details_bloc.dart';
 import '../widgets/product_review_widget.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -13,7 +16,6 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductsModel product = Get.arguments;
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -114,6 +116,55 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+        builder: (context, state) {
+          final isSuccess = state is AddToCartSuccess;
+
+          return GestureDetector(
+            onTap: () {
+              final state = context.read<ProductDetailsBloc>().state;
+
+              if (state is SelectedSizeIndex) {
+                context.read<ProductDetailsBloc>().add(
+                  AddToCartevent(product.documentId!, state.sizeIndex),
+                );
+              } else {
+                Get.snackbar(
+                  "Please select a size",
+                  "You must choose a size before adding to cart.",
+                  backgroundColor: Colors.red.shade100,
+                  colorText: Colors.black,
+                );
+              }
+            },
+            child: AnimatedContainer(
+              duration: Duration(seconds: 2),
+              height: 72.h,
+              decoration: BoxDecoration(
+                color: isSuccess ? Colors.green : AppColors.introScreenBgColor,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(16),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.shopping_bag, color: AppColors.whiteColor),
+                  SizedBox(width: 8.w),
+                  Text(
+                    isSuccess ? "Added to Cart" : "Add To Cart",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
