@@ -10,14 +10,14 @@ sealed class ProductDetailsState extends Equatable {
 final class ProductDetailsInitial extends ProductDetailsState {}
 
 class ProductDetailsLoaded extends ProductDetailsState {
-  final int? selectedSizeIndex;
+  final String? selectedSize;
   final bool isProductInCart;
   final bool isAddingToCart;
   final bool addToCartSuccess;
   final String? errorMessage;
 
   const ProductDetailsLoaded({
-    this.selectedSizeIndex,
+    this.selectedSize,
     this.isProductInCart = false,
     this.isAddingToCart = false,
     this.addToCartSuccess = false,
@@ -25,7 +25,7 @@ class ProductDetailsLoaded extends ProductDetailsState {
   });
 
   ProductDetailsLoaded copyWith({
-    int? selectedSizeIndex,
+    String? selectedSize,
     bool? isProductInCart,
     bool? isAddingToCart,
     bool? addToCartSuccess,
@@ -33,20 +33,22 @@ class ProductDetailsLoaded extends ProductDetailsState {
     bool clearErrorMessage = false,
   }) {
     return ProductDetailsLoaded(
-      selectedSizeIndex: selectedSizeIndex ?? this.selectedSizeIndex,
+      selectedSize: selectedSize ?? this.selectedSize,
       isProductInCart: isProductInCart ?? this.isProductInCart,
       isAddingToCart: isAddingToCart ?? this.isAddingToCart,
       addToCartSuccess: addToCartSuccess ?? this.addToCartSuccess,
-      errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
+      errorMessage: clearErrorMessage
+          ? null
+          : errorMessage ?? this.errorMessage,
     );
   }
 
   @override
   List<Object?> get props => [
-        selectedSizeIndex,
-        isProductInCart,
-        isAddingToCart,
-        addToCartSuccess,
-        errorMessage,
-      ];
+    selectedSize,
+    isProductInCart,
+    isAddingToCart,
+    addToCartSuccess,
+    errorMessage,
+  ];
 }

@@ -11,11 +11,13 @@ import 'package:gem_store/features/auth/signup_screen/ui/signup_screen.dart';
 import 'package:gem_store/features/bottom_nav_screen/cubit/bottom_nav_cubit.dart';
 import 'package:gem_store/features/bottom_nav_screen/ui/bottom_nav_screen.dart';
 import 'package:gem_store/features/cart_screen/ui/cart_screen.dart';
+import 'package:gem_store/features/confirm_order_screen/ui/confirm_order_screen.dart';
 import 'package:gem_store/features/home_screen/bloc/home_bloc.dart';
 import 'package:gem_store/features/home_screen/ui/home_screen.dart';
 import 'package:gem_store/features/intro_screens/cubit/intro_screen_cubit.dart';
 import 'package:gem_store/features/intro_screens/ui/intro_screen.dart';
 import 'package:gem_store/features/intro_screens/ui/welcome_screen.dart';
+import 'package:gem_store/features/orders_screen/ui/orders_screen.dart';
 import 'package:gem_store/features/product_details_screen/bloc/product_details_bloc.dart';
 import 'package:gem_store/features/profile_screen/ui/profile_screen.dart';
 import 'package:gem_store/features/search_screen/ui/search_screen.dart';
@@ -58,11 +60,15 @@ class MyApp extends StatelessWidget {
         designSize: const Size(375, 812),
         builder: (context, child) {
           return GetMaterialApp(
-            initialRoute: AppRoutes.welcomeScreen,
+            initialRoute: AppRoutes.splashScreen,
             getPages: [
               GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
               GetPage(
                 name: AppRoutes.splashScreen,
+                page: () => WelcomeScreen(),
+              ),
+              GetPage(
+                name: AppRoutes.welcomeScreen,
                 page: () => WelcomeScreen(),
               ),
               GetPage(name: AppRoutes.introScreen, page: () => IntroScreen()),
@@ -83,6 +89,11 @@ class MyApp extends StatelessWidget {
                 name: AppRoutes.productDetailsScreen,
                 page: () => ProductDetailsScreen(),
               ),
+              GetPage(
+                name: AppRoutes.confirmOrderScreen,
+                page: () => ConfirmOrderScreen(),
+              ),
+              GetPage(name: AppRoutes.ordersScreen, page: () => OrdersScreen()),
             ],
             debugShowCheckedModeBanner: false,
             title: 'Gem Store',

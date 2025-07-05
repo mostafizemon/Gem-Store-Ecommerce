@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gem_store/app_constrains/app_routes.dart';
 import 'package:gem_store/services/local_storage_service.dart';
@@ -15,8 +16,11 @@ class SplashCubit extends Cubit<SplashState> {
   Future<void> _startSplashTimer() async{
     emit(SplashLoading());
     await Future.delayed(Duration(seconds: 3));
-    final localStorage=LocalStorageService();
-    final isLoggedIn=localStorage.isLoggedIn;
+    
+    // Wait for Firebase authentication state to be ready
+    final user = await FirebaseAuth.instance.authStateChanges().first;
+    final isLoggedIn = user != null && LocalStorageService().isLoggedIn;
+
     emit(SplashLoaded());
     if (isLoggedIn) {
       Get.offNamed(AppRoutes.bottomNavScreen);

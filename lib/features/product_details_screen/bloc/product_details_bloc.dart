@@ -23,7 +23,7 @@ class ProductDetailsBloc
   ) {
     if (state is ProductDetailsLoaded) {
       final currentState = state as ProductDetailsLoaded;
-      emit(currentState.copyWith(selectedSizeIndex: event.sizeIndex));
+      emit(currentState.copyWith(selectedSize: event.size));
     }
   }
 
@@ -57,7 +57,7 @@ class ProductDetailsBloc
       await cartCollection.doc().set({
         'userUid': userUid,
         'productID': event.productID,
-        'sizeIndex': event.sizeIndex,
+        'size': event.size,
         'quantity': 1,
         'createdAt': Timestamp.now(),
       });

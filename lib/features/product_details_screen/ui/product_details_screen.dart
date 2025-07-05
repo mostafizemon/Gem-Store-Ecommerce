@@ -92,11 +92,11 @@ class ProductDetailsView extends StatelessWidget {
                 ? null
                 : () {
                     if (state is ProductDetailsLoaded) {
-                      if (state.selectedSizeIndex != null) {
+                      if (state.selectedSize != null) {
                         context.read<ProductDetailsBloc>().add(
                           AddToCartevent(
                             product.documentId!,
-                            state.selectedSizeIndex!,
+                            state.selectedSize!,
                           ),
                         );
                       } else {

@@ -38,7 +38,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         return ProductsModel.fromJson(data);
       }).toList();
       emit(SearchLoaded(results));
-      print(results.length);
+      
     } catch (e) {
       emit(SearchError(e.toString()));
     }

@@ -25,9 +25,9 @@ class SizeWidget extends StatelessWidget {
             height: 32.h,
             child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
               builder: (context, state) {
-                int? selectedIndex;
+                String? selectedSize;
                 if (state is ProductDetailsLoaded) {
-                  selectedIndex = state.selectedSizeIndex;
+                  selectedSize = state.selectedSize;
                 }
 
                 return ListView.separated(
@@ -35,12 +35,12 @@ class SizeWidget extends StatelessWidget {
                   itemCount: product.size?.length ?? 0,
                   separatorBuilder: (_, __) => SizedBox(width: 4.w),
                   itemBuilder: (context, index) {
-                    final isSelected = selectedIndex == index;
+                    final isSelected = selectedSize == product.size![index];
 
                     return GestureDetector(
                       onTap: () {
                         context.read<ProductDetailsBloc>().add(
-                          SelectedSizeevent(index),
+                          SelectedSizeevent(product.size![index]),
                         );
                       },
                       child: CircleAvatar(

@@ -8,18 +8,18 @@ sealed class ProductDetailsEvent extends Equatable {
 }
 
 class SelectedSizeevent extends ProductDetailsEvent {
-  final int sizeIndex;
-  const SelectedSizeevent(this.sizeIndex);
+  final String size;
+  const SelectedSizeevent(this.size);
   @override
-  List<Object> get props => [sizeIndex];
+  List<Object> get props => [size];
 }
 
 class AddToCartevent extends ProductDetailsEvent {
   final String productID;
-  final int sizeIndex;
-  const AddToCartevent(this.productID, this.sizeIndex);
+  final String size;
+  const AddToCartevent(this.productID, this.size);
   @override
-  List<Object> get props => [productID, sizeIndex];
+  List<Object> get props => [productID, size];
 }
 
 class CheckProductInCart extends ProductDetailsEvent {
