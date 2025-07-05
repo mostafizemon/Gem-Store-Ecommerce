@@ -38,7 +38,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -62,38 +62,38 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
             initialRoute: AppRoutes.splashScreen,
             getPages: [
-              GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
+              GetPage(name: AppRoutes.splashScreen, page: () => const SplashScreen()),
               GetPage(
                 name: AppRoutes.splashScreen,
-                page: () => WelcomeScreen(),
+                page: () => const SplashScreen(),
               ),
               GetPage(
                 name: AppRoutes.welcomeScreen,
-                page: () => WelcomeScreen(),
+                page: () => const WelcomeScreen(),
               ),
-              GetPage(name: AppRoutes.introScreen, page: () => IntroScreen()),
-              GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
-              GetPage(name: AppRoutes.signupScreen, page: () => SignupScreen()),
-              GetPage(name: AppRoutes.homeScreen, page: () => HomeScreen()),
+              GetPage(name: AppRoutes.introScreen, page: () => const IntroScreen()),
+              GetPage(name: AppRoutes.loginScreen, page: () => const LoginScreen()),
+              GetPage(name: AppRoutes.signupScreen, page: () => const SignupScreen()),
+              GetPage(name: AppRoutes.homeScreen, page: () => const HomeScreen()),
               GetPage(
                 name: AppRoutes.bottomNavScreen,
-                page: () => BottomNavScreen(),
+                page: () => const BottomNavScreen(),
               ),
-              GetPage(name: AppRoutes.cartScreen, page: () => CartScreen()),
+              GetPage(name: AppRoutes.cartScreen, page: () => const CartScreen()),
               GetPage(
                 name: AppRoutes.profileScreen,
-                page: () => ProfileScreen(),
+                page: () => const ProfileScreen(),
               ),
-              GetPage(name: AppRoutes.searchScreen, page: () => SearchScreen()),
+              GetPage(name: AppRoutes.searchScreen, page: () => const SearchScreen()),
               GetPage(
                 name: AppRoutes.productDetailsScreen,
-                page: () => ProductDetailsScreen(),
+                page: () => const ProductDetailsScreen(),
               ),
               GetPage(
                 name: AppRoutes.confirmOrderScreen,
-                page: () => ConfirmOrderScreen(),
+                page: () => const ConfirmOrderScreen(),
               ),
-              GetPage(name: AppRoutes.ordersScreen, page: () => OrdersScreen()),
+              GetPage(name: AppRoutes.ordersScreen, page: () => const OrdersScreen()),
             ],
             debugShowCheckedModeBanner: false,
             title: 'Gem Store',
